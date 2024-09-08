@@ -20,15 +20,20 @@ public class App {
         }
 
         Palavra palavraMeio = encontraPalavraMeioAlfabeto(amostras);
+        amostras.remove(palavraMeio);
 
         No raizInicial = new No(palavraMeio.getPalavra(), palavraMeio.getLinha());
         Arvore arvore = new Arvore(raizInicial);
 
         while (amostras.isEmpty() != true) {
+
+            // esvazia fila das amostras
             Palavra word = amostras.poll();
             System.out.println(word.getPalavra());
 
             arvore.Inserir(new No(word.getPalavra(), word.getLinha()));
+
+            // esvazia a fila
         }
 
         arvore.EmOrdem();

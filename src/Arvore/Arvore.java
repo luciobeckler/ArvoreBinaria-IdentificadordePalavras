@@ -10,13 +10,13 @@ public class Arvore {
   private No InserirNovo(No novo, No atual) {
     if (atual == null)
       return novo;
-      
+
     if (novo.palavra.compareTo(atual.palavra) < 0)
       atual.esquerda = InserirNovo(novo, atual.esquerda);
     else if (novo.palavra.compareTo(atual.palavra) > 0)
       atual.direita = InserirNovo(novo, atual.direita);
     else if (novo.palavra.compareTo(atual.palavra) == 0) {
-      System.out.println(novo.palavra);
+      atual.adicionar();
     }
 
     return atual;
@@ -45,7 +45,7 @@ public class Arvore {
   private void EmOrdem(No elemento) {
     if (elemento != null) {
       EmOrdem(elemento.esquerda);
-      System.out.print(elemento.palavra + " ");
+      System.out.print(elemento.palavra + elemento.contador + " ");
       EmOrdem(elemento.direita);
     }
   }
