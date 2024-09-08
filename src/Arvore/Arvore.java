@@ -10,11 +10,14 @@ public class Arvore {
   private No InserirNovo(No novo, No atual) {
     if (atual == null)
       return novo;
-
-    if (novo.valor < atual.valor)
+      
+    if (novo.palavra.compareTo(atual.palavra) < 0)
       atual.esquerda = InserirNovo(novo, atual.esquerda);
-    else if (novo.valor > atual.valor)
+    else if (novo.palavra.compareTo(atual.palavra) > 0)
       atual.direita = InserirNovo(novo, atual.direita);
+    else if (novo.palavra.compareTo(atual.palavra) == 0) {
+      System.out.println(novo.palavra);
+    }
 
     return atual;
   }
@@ -25,116 +28,116 @@ public class Arvore {
 
   private void PreOrdem(No elemento) {
     if (elemento != null) {
-      System.out.print(elemento.valor + " ");
+      // System.out.print(elemento.valor + " ");
       PreOrdem(elemento.esquerda);
       PreOrdem(elemento.direita);
     }
   }
 
-  private void PosOrdem(No elemento) {
-    if (elemento != null) {
-      PosOrdem(elemento.esquerda);
-      PosOrdem(elemento.direita);
-      System.out.print(elemento.valor + " ");
-    }
-  }
+  // private void PosOrdem(No elemento) {
+  // if (elemento != null) {
+  // PosOrdem(elemento.esquerda);
+  // PosOrdem(elemento.direita);
+  // System.out.print(elemento.valor + " ");
+  // }
+  // }
 
   private void EmOrdem(No elemento) {
     if (elemento != null) {
       EmOrdem(elemento.esquerda);
-      System.out.print(elemento.valor + " ");
+      System.out.print(elemento.palavra + " ");
       EmOrdem(elemento.direita);
     }
   }
 
-  public void PreOrdem() {
-    PreOrdem(raiz);
-    System.out.println();
-  }
+  // public void PreOrdem() {
+  // PreOrdem(raiz);
+  // System.out.println();
+  // }
 
-  public void PosOrdem() {
-    PosOrdem(raiz);
-    System.out.println();
-  }
+  // public void PosOrdem() {
+  // PosOrdem(raiz);
+  // System.out.println();
+  // }
 
   public void EmOrdem() {
     EmOrdem(raiz);
     System.out.println();
   }
 
-  No encontrarElemento(No atual, int valor) {
-    if (atual == null)
-      return null;
+  // No encontrarElemento(No atual, int valor) {
+  // if (atual == null)
+  // return null;
 
-    if (valor == atual.valor)
-      return atual;
+  // if (valor == atual.valor)
+  // return atual;
 
-    if (valor > atual.valor) {
+  // if (valor > atual.valor) {
 
-      if (atual.direita != null && atual.direita.valor == valor)
-        return atual;
-      return encontrarElemento(atual.direita, valor);
-    } else {
-      if (atual.esquerda != null && atual.esquerda.valor == valor)
-        return atual;
-      return encontrarElemento(atual.esquerda, valor);
-    }
-  }
+  // if (atual.direita != null && atual.direita.valor == valor)
+  // return atual;
+  // return encontrarElemento(atual.direita, valor);
+  // } else {
+  // if (atual.esquerda != null && atual.esquerda.valor == valor)
+  // return atual;
+  // return encontrarElemento(atual.esquerda, valor);
+  // }
+  // }
 
-  public boolean remover(int valor) {
-    if (raiz == null)
-      return false;
-    else {
-      No pai;
-      No noX;
-      if (raiz.valor == valor) {
-        pai = raiz;
-        noX = raiz;
-      } else {
+  // public boolean remover(int valor) {
+  // if (raiz == null)
+  // return false;
+  // else {
+  // No pai;
+  // No noX;
+  // if (raiz.valor == valor) {
+  // pai = raiz;
+  // noX = raiz;
+  // } else {
 
-        pai = encontrarElemento(raiz, valor);
-        if (pai.valor < valor)
-          noX = pai.direita;
-        else
-          noX = pai.esquerda;
+  // pai = encontrarElemento(raiz, valor);
+  // if (pai.valor < valor)
+  // noX = pai.direita;
+  // else
+  // noX = pai.esquerda;
 
-      }
+  // }
 
-      if (noX.direita == null && noX.esquerda == null) {
-        if (pai.valor < valor)
-          pai.direita = null;
-        else
-          pai.esquerda = null;
+  // if (noX.direita == null && noX.esquerda == null) {
+  // if (pai.valor < valor)
+  // pai.direita = null;
+  // else
+  // pai.esquerda = null;
 
-      } else {
-        if (noX.direita != null && noX.esquerda != null) {
-          No noPaiDireitaEsquerda = maisEsquerdaPossivel(noX, noX.direita);
-          No substituto = noPaiDireitaEsquerda.esquerda;
-          noPaiDireitaEsquerda.esquerda = null;
-          substituto.direita = noX.direita;
-          substituto.esquerda = noX.esquerda;
-          noX.esquerda = null;
-          noX.direita = null;
+  // } else {
+  // if (noX.direita != null && noX.esquerda != null) {
+  // No noPaiDireitaEsquerda = maisEsquerdaPossivel(noX, noX.direita);
+  // No substituto = noPaiDireitaEsquerda.esquerda;
+  // noPaiDireitaEsquerda.esquerda = null;
+  // substituto.direita = noX.direita;
+  // substituto.esquerda = noX.esquerda;
+  // noX.esquerda = null;
+  // noX.direita = null;
 
-        } else {
-          if (noX.direita == null) {
-            if (pai.valor > valor)
-              pai.direita = noX.esquerda;
-            else
-              pai.esquerda = noX.esquerda;
-          }
-          if (noX.esquerda == null) {
-            if (pai.valor > valor)
-              pai.direita = noX.direita;
-            else
-              pai.esquerda = noX.direita;
-          }
+  // } else {
+  // if (noX.direita == null) {
+  // if (pai.valor > valor)
+  // pai.direita = noX.esquerda;
+  // else
+  // pai.esquerda = noX.esquerda;
+  // }
+  // if (noX.esquerda == null) {
+  // if (pai.valor > valor)
+  // pai.direita = noX.direita;
+  // else
+  // pai.esquerda = noX.direita;
+  // }
 
-        }
-      }
-      return true;
-    }
-  }
+  // }
+  // }
+  // return true;
+  // }
+  // }
 
   private No maisEsquerdaPossivel(No pai, No filhoAtual) {
     if (filhoAtual.esquerda == null)
