@@ -16,7 +16,7 @@ public class Arvore {
     else if (novo.palavra.compareTo(atual.palavra) > 0)
       atual.direita = InserirNovo(novo, atual.direita);
     else if (novo.palavra.compareTo(atual.palavra) == 0) {
-      atual.adicionar();
+      atual.adicionarLinha(novo.linha);
     }
 
     return atual;
@@ -45,7 +45,11 @@ public class Arvore {
   private void EmOrdem(No elemento) {
     if (elemento != null) {
       EmOrdem(elemento.esquerda);
-      System.out.print(elemento.palavra + elemento.contador + " ");
+      System.out.print(elemento.palavra + " ");
+      for (int i = 0; i < elemento.linhas.size(); i++) {
+        System.out.print(elemento.linhas.get(i) + " ");
+      }
+      System.out.println("");
       EmOrdem(elemento.direita);
     }
   }

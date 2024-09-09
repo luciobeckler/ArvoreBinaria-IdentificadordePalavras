@@ -10,75 +10,48 @@ import Data.Leitor;
 import Data.Palavra;
 
 public class App {
+    static Queue<Palavra> fila = new LinkedList<>();
+    static Queue<Palavra> amostras = new LinkedList<>();
+
     public static void main(String[] args) throws Exception {
-        Queue<Palavra> fila = Leitor.LeArquivosECriaObjetos("src/Data/brasil.txt");
-
-        Queue<Palavra> amostras = new LinkedList<>();
-
-        for (int i = 0; i < 10; i++) {
-            amostras.add(fila.poll());
-        }
+        fila = Leitor.LeArquivosECriaObjetos("src/Data/faroeste.txt");
+        popularAmostras();
 
         Palavra palavraMeio = encontraPalavraMeioAlfabeto(amostras);
         amostras.remove(palavraMeio);
+        Arvore arvore = esvaziarFilasEPopularArvore(palavraMeio);
 
-        No raizInicial = new No(palavraMeio.getPalavra(), palavraMeio.getLinha());
+        printEmOrdemAlfabetica(arvore);
+    }
+
+    private static Arvore esvaziarFilasEPopularArvore(Palavra noInicial) {
+        No raizInicial = new No(noInicial.getPalavra(), noInicial.getLinha());
         Arvore arvore = new Arvore(raizInicial);
 
-        while (amostras.isEmpty() != true) {
+        while (amostras.isEmpty() != true && fila.isEmpty() != true) {
 
             // esvazia fila das amostras
-            Palavra word = amostras.poll();
-            System.out.println(word.getPalavra());
+            if (amostras.isEmpty() != false) {
+                Palavra word = amostras.poll();
+                arvore.Inserir(new No(word.getPalavra(), word.getLinha()));
+            } else {
+                // esvazia a fila
+                Palavra word = fila.poll();
+                arvore.Inserir(new No(word.getPalavra(), word.getLinha()));
+            }
 
-            arvore.Inserir(new No(word.getPalavra(), word.getLinha()));
-
-            // esvazia a fila
         }
+        return arvore;
+    }
 
+    private static void printEmOrdemAlfabetica(Arvore arvore) {
         arvore.EmOrdem();
+    }
 
-        System.out.println();
-
-        // ler arquivo e coloca em uma stack
-        // obtem amostras e inicializa uma raiz
-        // comeca a desempilhar e adicionar na arvore
-
-        // System.out.println("Hello, World!");
-
-        // No raizInicial = new No(50);
-
-        // Arvore arvore = new Arvore(raizInicial);
-        // arvore.Inserir(new No(10));
-        // ;
-        // arvore.Inserir(new No(20));
-        // ;
-        // arvore.Inserir(new No(30));
-        // ;
-        // arvore.Inserir(new No(40));
-        // ;
-        // arvore.Inserir(new No(50));
-        // ;
-        // arvore.Inserir(new No(60));
-        // ;
-        // arvore.Inserir(new No(70));
-        // ;
-        // arvore.Inserir(new No(80));
-        // ;
-        // arvore.Inserir(new No(90));
-        // ;
-        // arvore.Inserir(new No(100));
-        // ;
-
-        // arvore.EmOrdem();
-
-        // arvore.remover(100);
-
-        // arvore.EmOrdem();
-
-        // arvore.Inserir(new No(100));
-
-        // arvore.EmOrdem();
+    private static void popularAmostras() {
+        for (int i = 0; i < 10; i++) {
+            amostras.add(fila.poll());
+        }
     }
 
     public static Palavra encontraPalavraMeioAlfabeto(Queue<Palavra> amostras) {
