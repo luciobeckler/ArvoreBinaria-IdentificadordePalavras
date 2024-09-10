@@ -3,7 +3,7 @@ Este projeto consiste em implementar um programa que lê um arquivo de texto no 
 
 Cada nó da árvore armazena uma palavra, e uma lista das linhas em que essa palavra foi encontrada no texto. No final, o programa imprime as palavras em ordem alfabética, utilizando a busca em árvores do tipo "em ordem", juntamente com os números das linhas em que cada palavra aparece.
 
-Para implementar a estrutura de árvore foram criadas duas classes:
+## Para implementar a estrutura de árvore foram criadas duas classes:
 ### Classe No
 Representa um nó da árvore de pesquisa binária. Os principais atributos e métodos são:
 
