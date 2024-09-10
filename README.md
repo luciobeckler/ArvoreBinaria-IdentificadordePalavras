@@ -11,8 +11,10 @@ Representa um nó da árvore de pesquisa binária. Os principais atributos e mé
 Representa a estrutura da árvore e suas ações e possui os seguintes atributos e classes:
 
 Agora para implemetar a solução foram implementadas as seguintes classes:
-###Palavra
+### Palavra
 É a classe que irá carregar a palavra, permitindo que a árvore encontre a ordem alfabética e a quantidade de vezes que esta palavra aparece
+### Leitor
+Classe responsável por realizar a leitura de arquivos e retornar uma fila de Palavras
 ### App
 É a classe onde a aplicação roda e é onde está a lógica das operações nas outras classes.
 
