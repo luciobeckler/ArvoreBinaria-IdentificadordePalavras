@@ -7,7 +7,7 @@ import java.util.Queue;
 
 public class Leitor {
   public static Queue<Palavra> LeArquivosECriaObjetos(String caminhoArquivo) {
-    Queue<Palavra> pilha = new LinkedList<>();
+    Queue<Palavra> fila = new LinkedList<>();
     final String CARACTERES_SPECIAIS = "[^A-Za-z0-9]";
 
     try {
@@ -25,7 +25,7 @@ public class Leitor {
           palavra = palavra.replaceAll(CARACTERES_SPECIAIS, "");
           Palavra word = new Palavra(palavra, contadorLinha);
 
-          pilha.add(word);
+          fila.add(word);
         }
 
         contadorLinha++;
@@ -34,6 +34,6 @@ public class Leitor {
     } catch (Exception e) {
       System.err.println(e);
     }
-    return pilha;
+    return fila;
   }
 }
