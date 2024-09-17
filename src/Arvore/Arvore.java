@@ -1,18 +1,18 @@
 package Arvore;
 
 public class Arvore {
-  No raiz;
+  avlNo raiz;
 
-  public Arvore(No raiz) {
+  public Arvore(avlNo raiz) {
     this.raiz = raiz;
   }
 
-  public void Inserir(No novo) {
+  public void Inserir(avlNo novo) {
     raiz = InserirNovo(novo, raiz);
   }
 
-  // #region Métodos inserção
-  private No InserirNovo(No novo, No atual) {
+  // #region Inserção
+  private avlNo InserirNovo(avlNo novo, avlNo atual) {
     if (atual == null)
       return novo;
 
@@ -28,13 +28,13 @@ public class Arvore {
   }
   // #endregion
 
-  // #region Métodos remoção
+  // #region Remoção
   public boolean remover(String palavra) {
     if (raiz == null)
       return false;
     else {
-      No pai;
-      No noX;
+      avlNo pai;
+      avlNo noX;
       if (raiz.palavra.compareTo(palavra) == 0) {
         pai = raiz;
         noX = raiz;
@@ -45,7 +45,6 @@ public class Arvore {
           noX = pai.direita;
         else
           noX = pai.esquerda;
-
       }
 
       if (noX.direita == null && noX.esquerda == null) {
@@ -56,8 +55,8 @@ public class Arvore {
 
       } else {
         if (noX.direita != null && noX.esquerda != null) {
-          No noPaiDireitaEsquerda = maisEsquerdaPossivel(noX, noX.direita);
-          No substituto = noPaiDireitaEsquerda.esquerda;
+          avlNo noPaiDireitaEsquerda = maisEsquerdaPossivel(noX, noX.direita);
+          avlNo substituto = noPaiDireitaEsquerda.esquerda;
           noPaiDireitaEsquerda.esquerda = null;
           substituto.direita = noX.direita;
           substituto.esquerda = noX.esquerda;
@@ -84,7 +83,7 @@ public class Arvore {
     }
   }
 
-  No encontrarElemento(No atual, String palavra) {
+  avlNo encontrarElemento(avlNo atual, String palavra) {
     if (atual == null)
       return null;
 
@@ -103,36 +102,20 @@ public class Arvore {
     }
   }
 
-  private No maisEsquerdaPossivel(No pai, No filhoAtual) {
+  private avlNo maisEsquerdaPossivel(avlNo pai, avlNo filhoAtual) {
     if (filhoAtual.esquerda == null)
       return pai;
     return maisEsquerdaPossivel(filhoAtual, filhoAtual.esquerda);
   }
-
-  /*
-   * private No obterSucessor(No NoRemovido) {
-   * No sucessorPai = NoRemovido;
-   * No sucessor = NoRemovido;
-   * No atual = NoRemovido.direita;
-   * 
-   * while (atual != null) {
-   * sucessorPai = sucessor;
-   * sucessor = atual;
-   * atual = atual.esquerda;
-   * }
-   * 
-   * if (sucessor != NoRemovido.direita) {
-   * sucessorPai.esquerda = sucessor.direita;
-   * sucessor.direita = NoRemovido.direita;
-   * }
-   * 
-   * return sucessor;
-   * }
-   */
   // #endregion
 
-  // #region Métodos exibição
-  private void PreOrdem(No elemento) {
+  // #region Exibição
+  public void PreOrdem() {
+    PreOrdem(raiz);
+    System.out.println();
+  }
+
+  private void PreOrdem(avlNo elemento) {
     if (elemento != null) {
       System.out.print(elemento.palavra + " ");
       PreOrdem(elemento.esquerda);
@@ -140,7 +123,12 @@ public class Arvore {
     }
   }
 
-  private void PosOrdem(No elemento) {
+  public void PosOrdem() {
+    PosOrdem(raiz);
+    System.out.println();
+  }
+
+  private void PosOrdem(avlNo elemento) {
     if (elemento != null) {
       PosOrdem(elemento.esquerda);
       PosOrdem(elemento.direita);
@@ -148,8 +136,14 @@ public class Arvore {
     }
   }
 
-  private void EmOrdem(No elemento) {
+  public void EmOrdem() {
+    EmOrdem(raiz);
+    System.out.println();
+  }
+
+  private void EmOrdem(avlNo elemento) {
     if (elemento != null) {
+
       EmOrdem(elemento.esquerda);
       System.out.print(elemento.palavra + " ");
       for (int i = 0; i < elemento.linhas.size(); i++) {
@@ -158,21 +152,6 @@ public class Arvore {
       System.out.println("");
       EmOrdem(elemento.direita);
     }
-  }
-
-  public void PreOrdem() {
-    PreOrdem(raiz);
-    System.out.println();
-  }
-
-  public void PosOrdem() {
-    PosOrdem(raiz);
-    System.out.println();
-  }
-
-  public void EmOrdem() {
-    EmOrdem(raiz);
-    System.out.println();
   }
   // #endregio
 

@@ -5,18 +5,20 @@ import java.util.List;
 
 import Data.Palavra;
 
-public class No {
+public class avlNo {
   int linha;
   String palavra;
   List<Integer> linhas = new ArrayList<>();
   Palavra word;
-  No direita;
-  No esquerda;
+  avlNo direita;
+  avlNo esquerda;
+  int fatorDeBalanceamento;
 
-  public No(String palavraInicial, int valorInicial) {
+  public avlNo(String palavraInicial, int valorInicial) {
     this.linha = valorInicial;
     this.palavra = palavraInicial;
     this.linhas.add(valorInicial);
+    fatorDeBalanceamento = 0;
   }
 
   public void adicionarLinha(int linha) {
