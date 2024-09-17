@@ -7,6 +7,11 @@ public class Arvore {
     this.raiz = raiz;
   }
 
+  public void Inserir(No novo) {
+    raiz = InserirNovo(novo, raiz);
+  }
+
+  // #region Métodos inserção
   private No InserirNovo(No novo, No atual) {
     if (atual == null)
       return novo;
@@ -21,19 +26,128 @@ public class Arvore {
 
     return atual;
   }
+  // #endregion
 
-  public void Inserir(No novo) {
-    raiz = InserirNovo(novo, raiz);
+  // #region Métodos remoção
+  public boolean remover(String palavra) {
+    if (raiz == null)
+      return false;
+    else {
+      No pai;
+      No noX;
+      if (raiz.palavra.compareTo(palavra) == 0) {
+        pai = raiz;
+        noX = raiz;
+      } else {
+
+        pai = encontrarElemento(raiz, palavra);
+        if (pai.palavra.compareTo(palavra) < 0)
+          noX = pai.direita;
+        else
+          noX = pai.esquerda;
+
+      }
+
+      if (noX.direita == null && noX.esquerda == null) {
+        if (pai.palavra.compareTo(palavra) < 0)
+          pai.direita = null;
+        else
+          pai.esquerda = null;
+
+      } else {
+        if (noX.direita != null && noX.esquerda != null) {
+          No noPaiDireitaEsquerda = maisEsquerdaPossivel(noX, noX.direita);
+          No substituto = noPaiDireitaEsquerda.esquerda;
+          noPaiDireitaEsquerda.esquerda = null;
+          substituto.direita = noX.direita;
+          substituto.esquerda = noX.esquerda;
+          noX.esquerda = null;
+          noX.direita = null;
+
+        } else {
+          if (noX.direita == null) {
+            if (pai.palavra.compareTo(palavra) > 0)
+              pai.direita = noX.esquerda;
+            else
+              pai.esquerda = noX.esquerda;
+          }
+          if (noX.esquerda == null) {
+            if (pai.palavra.compareTo(palavra) > 0)
+              pai.direita = noX.direita;
+            else
+              pai.esquerda = noX.direita;
+          }
+
+        }
+      }
+      return true;
+    }
   }
 
+  No encontrarElemento(No atual, String palavra) {
+    if (atual == null)
+      return null;
+
+    if (palavra.compareTo(atual.palavra) == 0)
+      return atual;
+
+    if (palavra.compareTo(atual.palavra) > 0) {
+
+      if (atual.direita != null && atual.direita.palavra.compareTo(palavra) == 0)
+        return atual;
+      return encontrarElemento(atual.direita, palavra);
+    } else {
+      if (atual.esquerda != null && atual.esquerda.palavra.compareTo(palavra) == 0)
+        return atual;
+      return encontrarElemento(atual.esquerda, palavra);
+    }
+  }
+
+  private No maisEsquerdaPossivel(No pai, No filhoAtual) {
+    if (filhoAtual.esquerda == null)
+      return pai;
+    return maisEsquerdaPossivel(filhoAtual, filhoAtual.esquerda);
+  }
+
+  /*
+   * private No obterSucessor(No NoRemovido) {
+   * No sucessorPai = NoRemovido;
+   * No sucessor = NoRemovido;
+   * No atual = NoRemovido.direita;
+   * 
+   * while (atual != null) {
+   * sucessorPai = sucessor;
+   * sucessor = atual;
+   * atual = atual.esquerda;
+   * }
+   * 
+   * if (sucessor != NoRemovido.direita) {
+   * sucessorPai.esquerda = sucessor.direita;
+   * sucessor.direita = NoRemovido.direita;
+   * }
+   * 
+   * return sucessor;
+   * }
+   */
+  // #endregion
+
+  // #region Métodos exibição
   private void PreOrdem(No elemento) {
     if (elemento != null) {
-      // System.out.print(elemento.valor + " ");
+      System.out.print(elemento.palavra + " ");
       PreOrdem(elemento.esquerda);
       PreOrdem(elemento.direita);
     }
   }
-  
+
+  private void PosOrdem(No elemento) {
+    if (elemento != null) {
+      PosOrdem(elemento.esquerda);
+      PosOrdem(elemento.direita);
+      System.out.print(elemento.palavra + " ");
+    }
+  }
+
   private void EmOrdem(No elemento) {
     if (elemento != null) {
       EmOrdem(elemento.esquerda);
@@ -46,9 +160,20 @@ public class Arvore {
     }
   }
 
+  public void PreOrdem() {
+    PreOrdem(raiz);
+    System.out.println();
+  }
+
+  public void PosOrdem() {
+    PosOrdem(raiz);
+    System.out.println();
+  }
+
   public void EmOrdem() {
     EmOrdem(raiz);
     System.out.println();
   }
+  // #endregio
 
 }
