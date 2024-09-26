@@ -15,9 +15,15 @@ public class App {
 
     public static void main(String[] args) throws Exception {
 
-        // GeraResultado();
+        long startTime = System.nanoTime();
 
-        TesteArvoreBalanceada();
+        GeraResultado();
+
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        double durationInMillis = duration / 1_000_000.0;
+
+        System.out.println("Tempo de execução de GeraResultado(): " + durationInMillis + " ms");
     }
 
     private static void TesteArvoreBalanceada() {
