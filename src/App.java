@@ -13,7 +13,15 @@ public class App {
     static Queue<Palavra> fila = new LinkedList<>();
 
     public static void main(String[] args) throws Exception {
+        long startTime = System.nanoTime();
+
         GeraResultado();
+
+        long endTime = System.nanoTime();
+        long duration = endTime - startTime;
+        double durationInMillis = duration / 1_000_000.0;
+
+        System.out.println("Tempo de execução de GeraResultado(): " + durationInMillis + " ms");
     }
 
     private static void GeraResultado() {
