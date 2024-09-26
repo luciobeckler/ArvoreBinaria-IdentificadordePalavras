@@ -11,66 +11,31 @@ import Data.Palavra;
 
 public class App {
     static Queue<Palavra> fila = new LinkedList<>();
-    static Queue<Palavra> amostras = new LinkedList<>();
 
     public static void main(String[] args) throws Exception {
-
-        // GeraResultado();
-
-        TesteArvoreBalanceada();
-    }
-
-    private static void TesteArvoreBalanceada() {
-        Arvore arvore = new Arvore(new avlNo("zebra", 5));
-
-        arvore.Inserir(new avlNo("abacate", 3));
-
-        arvore.Inserir(new avlNo("bacia", 1));
-
-        arvore.EmOrdem();
+        GeraResultado();
     }
 
     private static void GeraResultado() {
         fila = Leitor.LeArquivosECriaObjetos("src/Data/faroeste.txt");
-        popularAmostras();
 
-        Palavra palavraMeio = encontraPalavraMeioAlfabeto(amostras);
-        amostras.remove(palavraMeio);
-        Arvore arvore = esvaziarFilasEPopularArvore(palavraMeio);
+        Arvore arvore = esvaziarFilasEPopularArvore();
 
         TesteFuncionalidadesArvore(arvore);
-        printEmOrdemAlfabetica(arvore);
     }
 
     // #region Métodos kickoff
-    private static Arvore esvaziarFilasEPopularArvore(Palavra noInicial) {
-        avlNo raizInicial = new avlNo(noInicial.getPalavra(), noInicial.getLinha());
-        Arvore arvore = new Arvore(raizInicial);
+    private static Arvore esvaziarFilasEPopularArvore() {
+        Arvore arvore = new Arvore();
 
-        while (amostras.isEmpty() != true && fila.isEmpty() != true) {
+        while (fila.isEmpty() != true) {
 
-            // esvazia fila das amostras
-            if (amostras.isEmpty() != false) {
-                Palavra word = amostras.poll();
-                arvore.Inserir(new avlNo(word.getPalavra(), word.getLinha()));
-            } else {
-                // esvazia a fila
-                Palavra word = fila.poll();
-                arvore.Inserir(new avlNo(word.getPalavra(), word.getLinha()));
-            }
+            // esvazia a fila
+            Palavra word = fila.poll();
+            arvore.Inserir(new avlNo(word.getPalavra(), word.getLinha()));
 
         }
         return arvore;
-    }
-
-    private static void printEmOrdemAlfabetica(Arvore arvore) {
-        arvore.EmOrdem();
-    }
-
-    private static void popularAmostras() {
-        for (int i = 0; i < 10; i++) {
-            amostras.add(fila.poll());
-        }
     }
 
     public static Palavra encontraPalavraMeioAlfabeto(Queue<Palavra> amostras) {
@@ -93,12 +58,6 @@ public class App {
 
         System.out.println("Exibindo a árvore em pré ordem \n\n");
         arvore.PreOrdem();
-
-        System.out.println("Exibindo a árvore em ordem \n\n");
-        arvore.EmOrdem();
-
-        System.out.println("Removendo a palavra teste \n\n");
-        arvore.remover("teste");
 
         System.out.println("Exibindo a árvore em ordem \n\n");
         arvore.EmOrdem();
