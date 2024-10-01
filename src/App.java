@@ -29,7 +29,7 @@ public class App {
 
         Arvore arvore = esvaziarFilasEPopularArvore();
 
-        TesteFuncionalidadesArvore(arvore);
+        // TesteFuncional6tidadesArvore(arvore);
     }
 
     // #region Métodos kickoff

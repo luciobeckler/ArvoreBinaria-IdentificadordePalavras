@@ -28,21 +28,45 @@ public class Arvore {
   private avlNo AjustarBalanceamento(avlNo atual) {
     int balanceamento = atual.getFatorDeBalanceamento();
 
-    if (balanceamento == 2) {
-      if (atual.esquerda.getFatorDeBalanceamento() < 0) {
-        atual.esquerda = rotacaoEsquerda(atual.esquerda);
-      }
-      return rotacaoDireita(atual);
+    if (balanceamento == 2) { // Desbalanceamento à esquerda
+      if (atual.direita.getFatorDeBalanceamento() == -1) {
+        atual.direita = rotacaoDireita(atual.direita);
+        // Criar novo método que rotacione após a rotacionada para a dereita
+        atual = filhoDireitaPaiEsquerda(atual);
+      } else
+        return rotacaoEsquerda(atual);
     }
 
-    if (balanceamento == -2) {
-      if (atual.direita.getFatorDeBalanceamento() > 0) {
-        atual.direita = rotacaoDireita(atual.direita);
-      }
-      return rotacaoEsquerda(atual);
+    if (balanceamento == -2) { // Desbalanceamento à direita
+      if (atual.esquerda.getFatorDeBalanceamento() == 1) {
+        atual.esquerda = rotacaoEsquerda(atual.esquerda);
+        // Criar novo método que rotacione após a rotacionada para a esquerda
+        atual = filhoEsquerdaPaiDireita(atual);
+      } else
+        return rotacaoDireita(atual);
     }
 
     return atual;
+  }
+
+  private avlNo filhoDireitaPaiEsquerda(avlNo c) {
+    avlNo b = c.direita;
+
+    b.esquerda = c;
+    c.direita = null;
+    c.esquerda = null;
+
+    return b;
+  }
+
+  private avlNo filhoEsquerdaPaiDireita(avlNo c) {
+    avlNo b = c.esquerda;
+
+    b.direita = c;
+    c.direita = null;
+    c.esquerda = null;
+
+    return b;
   }
 
   private avlNo rotacaoDireita(avlNo y) {

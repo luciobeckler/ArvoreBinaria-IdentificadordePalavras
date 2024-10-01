@@ -37,6 +37,6 @@ public class avlNo {
   }
 
   public int getFatorDeBalanceamento() {
-    return getAltura(esquerda) - getAltura(direita);
+    return getAltura(direita) - getAltura(esquerda);
   }
 }
