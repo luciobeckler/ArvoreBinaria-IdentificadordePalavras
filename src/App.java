@@ -44,8 +44,7 @@ public class App {
         amostras.remove(palavraMeio);
         Arvore arvore = esvaziarFilasEPopularArvore(palavraMeio);
 
-        TesteFuncionalidadesArvore(arvore);
-        printEmOrdemAlfabetica(arvore);
+        arvore.EmOrdem();
     }
 
     // #region Métodos kickoff
