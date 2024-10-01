@@ -29,6 +29,8 @@ public class App {
 
         Arvore arvore = esvaziarFilasEPopularArvore();
 
+        arvore.EmOrdem();
+
         // TesteFuncional6tidadesArvore(arvore);
     }
 
