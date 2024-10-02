@@ -67,19 +67,4 @@ public class App {
     }
     // #endregion
 
-    // #region Método teste funcionalidades
-    private static void TesteFuncionalidadesArvore(Arvore arvore) {
-        System.out.println("Inserindo a palavra teste \n\n");
-        arvore.Inserir(new avlNo("teste", 15));
-
-        System.out.println("Exibindo a árvore em Pos ordem \n\n");
-        arvore.PosOrdem();
-
-        System.out.println("Exibindo a árvore em pré ordem \n\n");
-        arvore.PreOrdem();
-
-        System.out.println("Exibindo a árvore em ordem \n\n");
-        arvore.EmOrdem();
-    }
-    // #endregion
 }

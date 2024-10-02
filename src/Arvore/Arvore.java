@@ -23,8 +23,10 @@ public class Arvore {
     atual.atualizarAltura();
     return AjustarBalanceamento(atual);
   }
+  // #endregion
 
   // Continuar a partir daqui
+  // #region Balanceamento
   private avlNo AjustarBalanceamento(avlNo atual) {
     int balanceamento = atual.getFatorDeBalanceamento();
 
@@ -70,6 +72,7 @@ public class Arvore {
 
     return b;
   }
+  // #endregion
 
   // #region Exibição
   public void PreOrdem() {
@@ -115,6 +118,7 @@ public class Arvore {
       EmOrdem(elemento.direita);
     }
   }
+  // #endregion
 
   // #region Busca
   public avlNo buscarPalavra(String palavra) {
@@ -131,6 +135,52 @@ public class Arvore {
       return buscarPalavra(atual.direita, palavra);
     else
       return atual;
+  }
+  // #endregion
+
+  // #region Remoção
+  public void removerPalavra(String palavra) {
+    raiz = removerPalavra(raiz, palavra);
+  }
+
+  private avlNo removerPalavra(avlNo atual, String palavra) {
+    if (atual == null)
+      return null;
+
+    if (palavra.compareTo(atual.palavra) < 0)
+      atual.esquerda = removerPalavra(atual.esquerda, palavra);
+    else if (palavra.compareTo(atual.palavra) > 0)
+      atual.direita = removerPalavra(atual.direita, palavra);
+    else {
+      // Nó folha
+      if (atual.esquerda == null && atual.direita == null)
+        return null;
+      // Nó com um filho
+      else if (atual.esquerda == null)
+        return atual.direita;
+      else if (atual.direita == null)
+        return atual.esquerda;
+
+      // Nó com dois filhos
+      else {
+        avlNo sucessor = encontrarMenor(atual.direita);
+        atual.palavra = sucessor.palavra;
+        atual.linhas = sucessor.linhas;
+        atual.direita = removerPalavra(atual.direita, sucessor.palavra);
+      }
+    }
+
+    // Atualizar altura e balancear
+    atual.atualizarAltura();
+    return AjustarBalanceamento(atual);
+  }
+
+  // Método auxiliar para encontrar o menor nó na subárvore
+  private avlNo encontrarMenor(avlNo atual) {
+    while (atual.esquerda != null) {
+      atual = atual.esquerda;
+    }
+    return atual;
   }
   // #endregion
 }
