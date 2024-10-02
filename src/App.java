@@ -27,7 +27,7 @@ public class App {
     }
 
     private static void TesteArvoreBalanceada() {
-        Arvore arvore = new Arvore(new avlNo("zebra", 5));
+        Arvore arvore = new Arvore();
 
         arvore.Inserir(new avlNo("abacate", 3));
 
@@ -38,31 +38,29 @@ public class App {
 
     private static void GeraResultado() {
         fila = Leitor.LeArquivosECriaObjetos("src/Data/faroeste.txt");
-        popularAmostras();
 
-        Palavra palavraMeio = encontraPalavraMeioAlfabeto(amostras);
-        amostras.remove(palavraMeio);
-        Arvore arvore = esvaziarFilasEPopularArvore(palavraMeio);
+        Arvore arvore = esvaziarFilasEPopularArvore();
 
-        arvore.EmOrdem();
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
     }
 
     // #region Métodos kickoff
-    private static Arvore esvaziarFilasEPopularArvore(Palavra noInicial) {
-        avlNo raizInicial = new avlNo(noInicial.getPalavra(), noInicial.getLinha());
-        Arvore arvore = new Arvore(raizInicial);
+    private static Arvore esvaziarFilasEPopularArvore() {
+        Arvore arvore = new Arvore();
 
-        while (amostras.isEmpty() != true && fila.isEmpty() != true) {
+        while (fila.isEmpty() != true) {
 
-            // esvazia fila das amostras
-            if (amostras.isEmpty() != false) {
-                Palavra word = amostras.poll();
-                arvore.Inserir(new avlNo(word.getPalavra(), word.getLinha()));
-            } else {
-                // esvazia a fila
-                Palavra word = fila.poll();
-                arvore.Inserir(new avlNo(word.getPalavra(), word.getLinha()));
-            }
+            Palavra word = fila.poll();
+            arvore.Inserir(new avlNo(word.getPalavra(), word.getLinha()));
 
         }
         return arvore;

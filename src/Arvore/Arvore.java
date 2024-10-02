@@ -3,10 +3,6 @@ package Arvore;
 public class Arvore {
   avlNo raiz;
 
-  public Arvore(avlNo raiz) {
-    this.raiz = raiz;
-  }
-
   public void Inserir(avlNo novo) {
     raiz = InserirNovo(novo, raiz);
   }
@@ -153,6 +149,24 @@ public class Arvore {
       EmOrdem(elemento.direita);
     }
   }
-  // #endregio
+  // #endregion
+
+  // #region Busca
+  public avlNo buscarPalavra(String palavra) {
+    return buscarPalavra(raiz, palavra);
+  }
+
+  private avlNo buscarPalavra(avlNo atual, String palavra) {
+    if (atual == null)
+      return null;
+
+    if (palavra.compareTo(atual.palavra) < 0)
+      return buscarPalavra(atual.esquerda, palavra);
+    else if (palavra.compareTo(atual.palavra) > 0)
+      return buscarPalavra(atual.direita, palavra);
+    else
+      return atual;
+  }
+  // #endregion
 
 }
