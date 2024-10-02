@@ -29,18 +29,14 @@ public class App {
 
         Arvore arvore = esvaziarFilasEPopularArvore();
 
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
+        RealizaVariasBuscas(arvore, 100000000);
+    }
 
-        // TesteFuncional6tidadesArvore(arvore);
+    private static void RealizaVariasBuscas(Arvore arvore, int quant) {
+        while (quant != 0) {
+            arvore.buscarPalavra("sofrer");
+            quant--;
+        }
     }
 
     // #region Métodos kickoff
