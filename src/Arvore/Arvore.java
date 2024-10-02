@@ -121,7 +121,6 @@ public class Arvore {
     return buscarPalavra(raiz, palavra);
   }
 
-  // Busca recursiva pela palavra
   private avlNo buscarPalavra(avlNo atual, String palavra) {
     if (atual == null)
       return null;
