@@ -12,17 +12,31 @@ public class avlNo {
   Palavra word;
   avlNo direita;
   avlNo esquerda;
-  int fatorDeBalanceamento;
+  int altura = 0;
 
   public avlNo(String palavraInicial, int valorInicial) {
     this.linha = valorInicial;
     this.palavra = palavraInicial;
-    this.linhas.add(valorInicial);
-    fatorDeBalanceamento = 0;
+    this.linhas.add(valorInicial + 1);
+    this.altura = 1;
   }
 
   public void adicionarLinha(int linha) {
-    this.linhas.add(linha);
+    this.linhas.add(linha + 1);
   }
 
+  public int getAltura(avlNo no) {
+    return no == null ? 0 : no.altura;
+  }
+
+  public void atualizarAltura() {
+    if (getAltura(esquerda) > getAltura(direita))
+      this.altura = 1 + getAltura(esquerda);
+    else
+      this.altura = 1 + getAltura(direita);
+  }
+
+  public int getFatorDeBalanceamento() {
+    return getAltura(direita) - getAltura(esquerda);
+  }
 }

@@ -11,10 +11,8 @@ import Data.Palavra;
 
 public class App {
     static Queue<Palavra> fila = new LinkedList<>();
-    static Queue<Palavra> amostras = new LinkedList<>();
 
     public static void main(String[] args) throws Exception {
-
         long startTime = System.nanoTime();
 
         GeraResultado();
@@ -26,31 +24,19 @@ public class App {
         System.out.println("Tempo de execução de GeraResultado(): " + durationInMillis + " ms");
     }
 
-    private static void TesteArvoreBalanceada() {
-        Arvore arvore = new Arvore();
-
-        arvore.Inserir(new avlNo("abacate", 3));
-
-        arvore.Inserir(new avlNo("bacia", 1));
-
-        arvore.EmOrdem();
-    }
-
     private static void GeraResultado() {
         fila = Leitor.LeArquivosECriaObjetos("src/Data/faroeste.txt");
 
         Arvore arvore = esvaziarFilasEPopularArvore();
 
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
-        arvore.buscarPalavra("sofrer");
+        RealizaVariasBuscas(arvore, 100000000);
+    }
+
+    private static void RealizaVariasBuscas(Arvore arvore, int quant) {
+        while (quant != 0) {
+            arvore.buscarPalavra("sofrer");
+            quant--;
+        }
     }
 
     // #region Métodos kickoff
@@ -59,21 +45,12 @@ public class App {
 
         while (fila.isEmpty() != true) {
 
+            // esvazia a fila
             Palavra word = fila.poll();
             arvore.Inserir(new avlNo(word.getPalavra(), word.getLinha()));
 
         }
         return arvore;
-    }
-
-    private static void printEmOrdemAlfabetica(Arvore arvore) {
-        arvore.EmOrdem();
-    }
-
-    private static void popularAmostras() {
-        for (int i = 0; i < 10; i++) {
-            amostras.add(fila.poll());
-        }
     }
 
     public static Palavra encontraPalavraMeioAlfabeto(Queue<Palavra> amostras) {
@@ -86,25 +63,4 @@ public class App {
     }
     // #endregion
 
-    // #region Método teste funcionalidades
-    private static void TesteFuncionalidadesArvore(Arvore arvore) {
-        System.out.println("Inserindo a palavra teste \n\n");
-        arvore.Inserir(new avlNo("teste", 15));
-
-        System.out.println("Exibindo a árvore em Pos ordem \n\n");
-        arvore.PosOrdem();
-
-        System.out.println("Exibindo a árvore em pré ordem \n\n");
-        arvore.PreOrdem();
-
-        System.out.println("Exibindo a árvore em ordem \n\n");
-        arvore.EmOrdem();
-
-        System.out.println("Removendo a palavra teste \n\n");
-        arvore.remover("teste");
-
-        System.out.println("Exibindo a árvore em ordem \n\n");
-        arvore.EmOrdem();
-    }
-    // #endregion
 }

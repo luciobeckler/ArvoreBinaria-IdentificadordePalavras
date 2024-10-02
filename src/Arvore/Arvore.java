@@ -20,88 +20,57 @@ public class Arvore {
       atual.adicionarLinha(novo.linha);
     }
 
-    return atual;
+    atual.atualizarAltura();
+    return AjustarBalanceamento(atual);
   }
   // #endregion
 
-  // #region Remoção
-  public boolean remover(String palavra) {
-    if (raiz == null)
-      return false;
-    else {
-      avlNo pai;
-      avlNo noX;
-      if (raiz.palavra.compareTo(palavra) == 0) {
-        pai = raiz;
-        noX = raiz;
-      } else {
+  // Continuar a partir daqui
+  // #region Balanceamento
+  private avlNo AjustarBalanceamento(avlNo atual) {
+    int balanceamento = atual.getFatorDeBalanceamento();
 
-        pai = encontrarElemento(raiz, palavra);
-        if (pai.palavra.compareTo(palavra) < 0)
-          noX = pai.direita;
-        else
-          noX = pai.esquerda;
+    if (balanceamento > 1) {
+      if (atual.direita != null && atual.direita.getFatorDeBalanceamento() < 0) {
+        atual.direita = rotacaoDireita(atual.direita);
       }
-
-      if (noX.direita == null && noX.esquerda == null) {
-        if (pai.palavra.compareTo(palavra) < 0)
-          pai.direita = null;
-        else
-          pai.esquerda = null;
-
-      } else {
-        if (noX.direita != null && noX.esquerda != null) {
-          avlNo noPaiDireitaEsquerda = maisEsquerdaPossivel(noX, noX.direita);
-          avlNo substituto = noPaiDireitaEsquerda.esquerda;
-          noPaiDireitaEsquerda.esquerda = null;
-          substituto.direita = noX.direita;
-          substituto.esquerda = noX.esquerda;
-          noX.esquerda = null;
-          noX.direita = null;
-
-        } else {
-          if (noX.direita == null) {
-            if (pai.palavra.compareTo(palavra) > 0)
-              pai.direita = noX.esquerda;
-            else
-              pai.esquerda = noX.esquerda;
-          }
-          if (noX.esquerda == null) {
-            if (pai.palavra.compareTo(palavra) > 0)
-              pai.direita = noX.direita;
-            else
-              pai.esquerda = noX.direita;
-          }
-
-        }
-      }
-      return true;
+      return rotacaoEsquerda(atual);
     }
+
+    if (balanceamento < -1) {
+      if (atual.esquerda != null && atual.esquerda.getFatorDeBalanceamento() > 0) {
+        atual.esquerda = rotacaoEsquerda(atual.esquerda);
+      }
+      return rotacaoDireita(atual);
+    }
+
+    return atual;
   }
 
-  avlNo encontrarElemento(avlNo atual, String palavra) {
-    if (atual == null)
-      return null;
+  private avlNo rotacaoDireita(avlNo c) {
+    avlNo b = c.esquerda;
+    avlNo a = b.direita;
 
-    if (palavra.compareTo(atual.palavra) == 0)
-      return atual;
+    b.direita = c;
+    c.esquerda = a;
 
-    if (palavra.compareTo(atual.palavra) > 0) {
+    c.atualizarAltura();
+    b.atualizarAltura();
 
-      if (atual.direita != null && atual.direita.palavra.compareTo(palavra) == 0)
-        return atual;
-      return encontrarElemento(atual.direita, palavra);
-    } else {
-      if (atual.esquerda != null && atual.esquerda.palavra.compareTo(palavra) == 0)
-        return atual;
-      return encontrarElemento(atual.esquerda, palavra);
-    }
+    return b;
   }
 
-  private avlNo maisEsquerdaPossivel(avlNo pai, avlNo filhoAtual) {
-    if (filhoAtual.esquerda == null)
-      return pai;
-    return maisEsquerdaPossivel(filhoAtual, filhoAtual.esquerda);
+  private avlNo rotacaoEsquerda(avlNo c) {
+    avlNo b = c.direita;
+    avlNo a = b.esquerda;
+
+    b.esquerda = c;
+    c.direita = a;
+
+    c.atualizarAltura();
+    b.atualizarAltura();
+
+    return b;
   }
   // #endregion
 
@@ -169,4 +138,49 @@ public class Arvore {
   }
   // #endregion
 
+  // #region Remoção
+  public void removerPalavra(String palavra) {
+    raiz = removerPalavra(raiz, palavra);
+  }
+
+  private avlNo removerPalavra(avlNo atual, String palavra) {
+    if (atual == null)
+      return null;
+
+    if (palavra.compareTo(atual.palavra) < 0)
+      atual.esquerda = removerPalavra(atual.esquerda, palavra);
+    else if (palavra.compareTo(atual.palavra) > 0)
+      atual.direita = removerPalavra(atual.direita, palavra);
+    else {
+      // Nó folha
+      if (atual.esquerda == null && atual.direita == null)
+        return null;
+      // Nó com um filho
+      else if (atual.esquerda == null)
+        return atual.direita;
+      else if (atual.direita == null)
+        return atual.esquerda;
+
+      // Nó com dois filhos
+      else {
+        avlNo sucessor = encontrarMenor(atual.direita);
+        atual.palavra = sucessor.palavra;
+        atual.linhas = sucessor.linhas;
+        atual.direita = removerPalavra(atual.direita, sucessor.palavra);
+      }
+    }
+
+    // Atualizar altura e balancear
+    atual.atualizarAltura();
+    return AjustarBalanceamento(atual);
+  }
+
+  // Método auxiliar para encontrar o menor nó na subárvore
+  private avlNo encontrarMenor(avlNo atual) {
+    while (atual.esquerda != null) {
+      atual = atual.esquerda;
+    }
+    return atual;
+  }
+  // #endregion
 }
