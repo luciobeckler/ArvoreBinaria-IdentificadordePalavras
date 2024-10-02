@@ -28,71 +28,47 @@ public class Arvore {
   private avlNo AjustarBalanceamento(avlNo atual) {
     int balanceamento = atual.getFatorDeBalanceamento();
 
-    if (balanceamento == 2) { // Desbalanceamento à esquerda
-      if (atual.direita.getFatorDeBalanceamento() == -1) {
+    if (balanceamento > 1) {
+      if (atual.direita != null && atual.direita.getFatorDeBalanceamento() < 0) {
         atual.direita = rotacaoDireita(atual.direita);
-        // Criar novo método que rotacione após a rotacionada para a dereita
-        atual = filhoDireitaPaiEsquerda(atual);
-      } else
-        return rotacaoEsquerda(atual);
+      }
+      return rotacaoEsquerda(atual);
     }
 
-    if (balanceamento == -2) { // Desbalanceamento à direita
-      if (atual.esquerda.getFatorDeBalanceamento() == 1) {
+    if (balanceamento < -1) {
+      if (atual.esquerda != null && atual.esquerda.getFatorDeBalanceamento() > 0) {
         atual.esquerda = rotacaoEsquerda(atual.esquerda);
-        // Criar novo método que rotacione após a rotacionada para a esquerda
-        atual = filhoEsquerdaPaiDireita(atual);
-      } else
-        return rotacaoDireita(atual);
+      }
+      return rotacaoDireita(atual);
     }
 
     return atual;
   }
 
-  private avlNo filhoDireitaPaiEsquerda(avlNo c) {
-    avlNo b = c.direita;
-
-    b.esquerda = c;
-    c.direita = null;
-    c.esquerda = null;
-
-    return b;
-  }
-
-  private avlNo filhoEsquerdaPaiDireita(avlNo c) {
+  private avlNo rotacaoDireita(avlNo c) {
     avlNo b = c.esquerda;
+    avlNo a = b.direita;
 
     b.direita = c;
-    c.direita = null;
-    c.esquerda = null;
+    c.esquerda = a;
+
+    c.atualizarAltura();
+    b.atualizarAltura();
 
     return b;
   }
 
-  private avlNo rotacaoDireita(avlNo y) {
-    avlNo x = y.esquerda;
-    avlNo T2 = x.direita;
+  private avlNo rotacaoEsquerda(avlNo c) {
+    avlNo b = c.direita;
+    avlNo a = b.esquerda;
 
-    x.direita = y;
-    y.esquerda = T2;
+    b.esquerda = c;
+    c.direita = a;
 
-    y.atualizarAltura();
-    x.atualizarAltura();
+    c.atualizarAltura();
+    b.atualizarAltura();
 
-    return x;
-  }
-
-  private avlNo rotacaoEsquerda(avlNo x) {
-    avlNo y = x.direita;
-    avlNo T2 = y.esquerda;
-
-    y.esquerda = x;
-    x.direita = T2;
-
-    x.atualizarAltura();
-    y.atualizarAltura();
-
-    return y;
+    return b;
   }
 
   // #region Exibição
