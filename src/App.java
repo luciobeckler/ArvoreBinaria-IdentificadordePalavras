@@ -30,6 +30,15 @@ public class App {
         Arvore arvore = esvaziarFilasEPopularArvore();
 
         arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
+        arvore.buscarPalavra("sofrer");
 
         // TesteFuncional6tidadesArvore(arvore);
     }
