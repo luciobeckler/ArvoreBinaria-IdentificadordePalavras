@@ -29,11 +29,7 @@ public class App {
 
         Arvore arvore = esvaziarFilasEPopularArvore();
 
-        arvore.EmOrdem();
-        arvore.EmOrdem();
-        arvore.EmOrdem();
-        arvore.EmOrdem();
-        arvore.EmOrdem();
+        arvore.buscarPalavra("sofrer");
 
         // TesteFuncional6tidadesArvore(arvore);
     }
